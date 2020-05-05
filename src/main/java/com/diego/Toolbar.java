@@ -10,6 +10,7 @@ public class Toolbar extends ToolBar {
 
     public Toolbar(MainView mainView) {
         this.mainView = mainView;
+
         Button draw = new Button("Draw");
         draw.setOnAction(this::handleDraw);
 
@@ -19,12 +20,21 @@ public class Toolbar extends ToolBar {
         Button step = new Button("Step");
         step.setOnAction(this::handleStep);
 
-        this.getItems().addAll(draw, erase, step);
+        Button reset = new Button("Reset");
+        reset.setOnAction(this::handleReset);
+       
+        this.getItems().addAll(draw, erase, reset, step);
 
+    }
+
+    private void handleReset(ActionEvent actionEvent) {
+        this.mainView.setApplicationState(MainView.EDITING);
+        this.mainView.draw();
     }
 
     private void handleStep(ActionEvent actionEvent) {
         System.out.println("Step pressed");
+        this.mainView.setApplicationState(MainView.SIMULATING);
         this.mainView.getSimulation().step();
         this.mainView.draw();
     }
